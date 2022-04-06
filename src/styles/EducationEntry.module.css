@@ -1,0 +1,16 @@
+.container {
+  background-color: lightblue;
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+}
+
+.left-container {
+  border: 1px solid black;
+}
+
+.right-container {
+  border: 1px solid black;
+  justify-self: end;
+  display: flex;
+  gap: 15px;
+}
