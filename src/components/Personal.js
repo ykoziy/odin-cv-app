@@ -200,9 +200,11 @@ class Personal extends Component {
       stateValue = 'linkedIn link';
     }
     if (stateName && stateValue) {
-      this.setState({
-        [stateName]: stateValue,
-      });
+      if (this.state[stateName] === '') {
+        this.setState({
+          [stateName]: stateValue,
+        });
+      }
     }
   }
 
