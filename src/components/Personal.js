@@ -7,11 +7,16 @@ class Personal extends Component {
     this.state = {
       fullName: 'John Doe',
       currentRole: 'Current Position',
+      location: 'New York, NY',
+      phone: '212-777-777',
+      email: 'johndoe@domain.com',
+      linkedIn: 'linkedIn link',
       editField: null,
     };
     this.handleInputFocus = this.handleInputFocus.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleRoleChange = this.handleRoleChange.bind(this);
+    this.handleGeneralFieldChange = this.handleGeneralFieldChange.bind(this);
     this.editFieldHandler = this.editFieldHandler.bind(this);
     this.handleClickOutside = this.handleClickOutside.bind(this);
   }
@@ -32,10 +37,24 @@ class Personal extends Component {
     });
   }
 
-  editFieldHandler(fieldName) {
-    this.setState({
-      editField: fieldName,
-    });
+  handleGeneralFieldChange(e) {
+    const { editField } = this.state;
+    let stateName = null;
+    if (editField === 'location') {
+      stateName = 'location';
+    } else if (editField === 'phone') {
+      stateName = 'phone';
+    } else if (editField === 'email') {
+      stateName = 'email';
+    } else if (editField === 'linkedin') {
+      stateName = 'linkedIn';
+    }
+
+    if (stateName) {
+      this.setState({
+        [stateName]: e.target.value,
+      });
+    }
   }
 
   renderFullNameField() {
@@ -78,10 +97,88 @@ class Personal extends Component {
     }
   }
 
+  renderLocation() {
+    const { editField, location } = this.state;
+    if (editField === 'location') {
+      return (
+        <input
+          type="text"
+          value={location}
+          onChange={this.handleGeneralFieldChange}
+          onFocus={this.handleInputFocus}
+          autoFocus
+        ></input>
+      );
+    } else {
+      return (
+        <p onClick={() => this.editFieldHandler('location')}>{location}</p>
+      );
+    }
+  }
+
+  renderPhone() {
+    const { editField, phone } = this.state;
+    if (editField === 'phone') {
+      return (
+        <input
+          type="text"
+          value={phone}
+          onChange={this.handleGeneralFieldChange}
+          onFocus={this.handleInputFocus}
+          autoFocus
+        ></input>
+      );
+    } else {
+      return <p onClick={() => this.editFieldHandler('phone')}>{phone}</p>;
+    }
+  }
+
+  renderEmail() {
+    const { editField, email } = this.state;
+    if (editField === 'email') {
+      return (
+        <input
+          type="text"
+          value={email}
+          onChange={this.handleGeneralFieldChange}
+          onFocus={this.handleInputFocus}
+          autoFocus
+        ></input>
+      );
+    } else {
+      return <p onClick={() => this.editFieldHandler('email')}>{email}</p>;
+    }
+  }
+
+  renderLinkedIn() {
+    const { editField, linkedIn } = this.state;
+    if (editField === 'linkedin') {
+      return (
+        <input
+          type="text"
+          value={linkedIn}
+          onChange={this.handleGeneralFieldChange}
+          onFocus={this.handleInputFocus}
+          autoFocus
+        ></input>
+      );
+    } else {
+      return (
+        <p onClick={() => this.editFieldHandler('linkedin')}>{linkedIn}</p>
+      );
+    }
+  }
+
+  editFieldHandler(fieldName) {
+    this.setState({
+      editField: fieldName,
+    });
+  }
+
   handleClickOutside(e) {
     if (e.target.nodeName !== 'INPUT') {
       this.setState({
-        editField: 0,
+        editField: null,
       });
     }
   }
@@ -100,10 +197,10 @@ class Personal extends Component {
           {this.renderCurrentRole()}
         </div>
         <div className={styles['right-container']}>
-          <p>location</p>
-          <p>phone</p>
-          <p>email</p>
-          <p>linkedIn</p>
+          {this.renderLocation()}
+          {this.renderPhone()}
+          {this.renderEmail()}
+          {this.renderLinkedIn()}
         </div>
         <div className={styles.about}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
