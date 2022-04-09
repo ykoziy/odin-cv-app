@@ -5,6 +5,7 @@ import {
   faPhone,
   faShareNodes,
   faCity,
+  faSquare,
 } from '@fortawesome/free-solid-svg-icons';
 import styles from '../styles/Personal.module.css';
 
@@ -104,101 +105,67 @@ class Personal extends Component {
     }
   }
 
-  renderLocation() {
-    const { editField, location } = this.state;
-    let element = null;
-    if (editField === 'location') {
-      element = (
-        <input
-          type="text"
-          value={location}
-          onChange={this.handleGeneralFieldChange}
-          onFocus={this.handleInputFocus}
-          autoFocus
-        ></input>
-      );
-    } else {
-      element = (
-        <p onClick={() => this.editFieldHandler('location')}>{location}</p>
-      );
-    }
+  renderGeneralInput(value) {
     return (
-      <React.Fragment>
-        <FontAwesomeIcon icon={faCity} />
-        {element}
-      </React.Fragment>
+      <input
+        type="text"
+        value={value}
+        onChange={this.handleGeneralFieldChange}
+        onFocus={this.handleInputFocus}
+        autoFocus
+      ></input>
     );
   }
 
-  renderPhone() {
-    const { editField, phone } = this.state;
-    let element = null;
-    if (editField === 'phone') {
-      element = (
-        <input
-          type="text"
-          value={phone}
-          onChange={this.handleGeneralFieldChange}
-          onFocus={this.handleInputFocus}
-          autoFocus
-        ></input>
-      );
-    } else {
-      element = <p onClick={() => this.editFieldHandler('phone')}>{phone}</p>;
-    }
-    return (
-      <React.Fragment>
-        <FontAwesomeIcon icon={faPhone} />
-        {element}
-      </React.Fragment>
-    );
+  renderGeneralPar(value, editFieldNme) {
+    return <p onClick={() => this.editFieldHandler(editFieldNme)}>{value}</p>;
   }
 
-  renderEmail() {
-    const { editField, email } = this.state;
+  renderGeneralField(index) {
+    const { editField, location, phone, email, linkedIn } = this.state;
     let element = null;
-    if (editField === 'email') {
-      element = (
-        <input
-          type="text"
-          value={email}
-          onChange={this.handleGeneralFieldChange}
-          onFocus={this.handleInputFocus}
-          autoFocus
-        ></input>
-      );
-    } else {
-      element = <p onClick={() => this.editFieldHandler('email')}>{email}</p>;
+    let icon = null;
+    switch (index) {
+      case 0:
+        if (editField === 'location') {
+          element = this.renderGeneralInput(location);
+        } else {
+          element = this.renderGeneralPar(location, 'location');
+        }
+        icon = faCity;
+        break;
+      case 1:
+        if (editField === 'phone') {
+          element = this.renderGeneralInput(phone);
+        } else {
+          element = this.renderGeneralPar(phone, 'phone');
+        }
+        icon = faPhone;
+        break;
+      case 2:
+        if (editField === 'email') {
+          element = this.renderGeneralInput(email);
+        } else {
+          element = this.renderGeneralPar(email, 'email');
+        }
+        icon = faEnvelope;
+        break;
+      case 3:
+        if (editField === 'linkedin') {
+          element = this.renderGeneralInput(linkedIn);
+        } else {
+          element = this.renderGeneralPar(linkedIn, 'linkedin');
+        }
+        icon = faShareNodes;
+        break;
+      default:
+        element = null;
+        icon = faSquare;
+        break;
     }
     return (
       <React.Fragment>
-        <FontAwesomeIcon icon={faEnvelope} />
-        {element}
-      </React.Fragment>
-    );
-  }
-
-  renderLinkedIn() {
-    const { editField, linkedIn } = this.state;
-    let element = null;
-    if (editField === 'linkedin') {
-      element = (
-        <input
-          type="text"
-          value={linkedIn}
-          onChange={this.handleGeneralFieldChange}
-          onFocus={this.handleInputFocus}
-          autoFocus
-        ></input>
-      );
-    } else {
-      element = (
-        <p onClick={() => this.editFieldHandler('linkedin')}>{linkedIn}</p>
-      );
-    }
-    return (
-      <React.Fragment>
-        <FontAwesomeIcon icon={faShareNodes} />
+        <FontAwesomeIcon icon={icon} />
         {element}
       </React.Fragment>
     );
@@ -263,10 +230,10 @@ class Personal extends Component {
         </div>
         <div className={styles['right-container']}>
           <ul className={styles.list}>
-            <li>{this.renderLocation()}</li>
-            <li>{this.renderPhone()}</li>
-            <li>{this.renderEmail()}</li>
-            <li>{this.renderLinkedIn()}</li>
+            <li>{this.renderGeneralField(0)}</li>
+            <li>{this.renderGeneralField(1)}</li>
+            <li>{this.renderGeneralField(2)}</li>
+            <li>{this.renderGeneralField(3)}</li>
           </ul>
         </div>
         <div className={styles.about}>
