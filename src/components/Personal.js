@@ -175,8 +175,38 @@ class Personal extends Component {
     });
   }
 
+  handleBlankField(fieldName) {
+    let stateName = null;
+    let stateValue = null;
+    if (fieldName === 'full-name') {
+      stateName = 'fullName';
+      stateValue = 'John Doe';
+    } else if (fieldName === 'current-position') {
+      stateName = 'currentRole';
+      stateValue = 'Current Position';
+    } else if (fieldName === 'location') {
+      stateName = 'location';
+      stateValue = 'New York, NY';
+    } else if (fieldName === 'phone') {
+      stateName = 'phone';
+      stateValue = '212-777-7777';
+    } else if (fieldName === 'email') {
+      stateName = 'email';
+      stateValue = 'johndoe@domain.com';
+    } else if (fieldName === 'linkedin') {
+      stateName = 'linkedIn';
+      stateValue = 'linkedIn link';
+    }
+    if (stateName && stateValue) {
+      this.setState({
+        [stateName]: stateValue,
+      });
+    }
+  }
+
   handleClickOutside(e) {
     if (e.target.nodeName !== 'INPUT') {
+      this.handleBlankField(this.state.editField);
       this.setState({
         editField: null,
       });
