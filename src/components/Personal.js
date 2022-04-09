@@ -1,4 +1,11 @@
 import React, { Component } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faEnvelope,
+  faPhone,
+  faShareNodes,
+  faCity,
+} from '@fortawesome/free-solid-svg-icons';
 import styles from '../styles/Personal.module.css';
 
 class Personal extends Component {
@@ -99,8 +106,9 @@ class Personal extends Component {
 
   renderLocation() {
     const { editField, location } = this.state;
+    let element = null;
     if (editField === 'location') {
-      return (
+      element = (
         <input
           type="text"
           value={location}
@@ -110,16 +118,23 @@ class Personal extends Component {
         ></input>
       );
     } else {
-      return (
+      element = (
         <p onClick={() => this.editFieldHandler('location')}>{location}</p>
       );
     }
+    return (
+      <React.Fragment>
+        <FontAwesomeIcon icon={faCity} />
+        {element}
+      </React.Fragment>
+    );
   }
 
   renderPhone() {
     const { editField, phone } = this.state;
+    let element = null;
     if (editField === 'phone') {
-      return (
+      element = (
         <input
           type="text"
           value={phone}
@@ -129,14 +144,21 @@ class Personal extends Component {
         ></input>
       );
     } else {
-      return <p onClick={() => this.editFieldHandler('phone')}>{phone}</p>;
+      element = <p onClick={() => this.editFieldHandler('phone')}>{phone}</p>;
     }
+    return (
+      <React.Fragment>
+        <FontAwesomeIcon icon={faPhone} />
+        {element}
+      </React.Fragment>
+    );
   }
 
   renderEmail() {
     const { editField, email } = this.state;
+    let element = null;
     if (editField === 'email') {
-      return (
+      element = (
         <input
           type="text"
           value={email}
@@ -146,14 +168,21 @@ class Personal extends Component {
         ></input>
       );
     } else {
-      return <p onClick={() => this.editFieldHandler('email')}>{email}</p>;
+      element = <p onClick={() => this.editFieldHandler('email')}>{email}</p>;
     }
+    return (
+      <React.Fragment>
+        <FontAwesomeIcon icon={faEnvelope} />
+        {element}
+      </React.Fragment>
+    );
   }
 
   renderLinkedIn() {
     const { editField, linkedIn } = this.state;
+    let element = null;
     if (editField === 'linkedin') {
-      return (
+      element = (
         <input
           type="text"
           value={linkedIn}
@@ -163,10 +192,16 @@ class Personal extends Component {
         ></input>
       );
     } else {
-      return (
+      element = (
         <p onClick={() => this.editFieldHandler('linkedin')}>{linkedIn}</p>
       );
     }
+    return (
+      <React.Fragment>
+        <FontAwesomeIcon icon={faShareNodes} />
+        {element}
+      </React.Fragment>
+    );
   }
 
   editFieldHandler(fieldName) {
@@ -227,10 +262,12 @@ class Personal extends Component {
           {this.renderCurrentRole()}
         </div>
         <div className={styles['right-container']}>
-          {this.renderLocation()}
-          {this.renderPhone()}
-          {this.renderEmail()}
-          {this.renderLinkedIn()}
+          <ul className={styles.list}>
+            <li>{this.renderLocation()}</li>
+            <li>{this.renderPhone()}</li>
+            <li>{this.renderEmail()}</li>
+            <li>{this.renderLinkedIn()}</li>
+          </ul>
         </div>
         <div className={styles.about}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do

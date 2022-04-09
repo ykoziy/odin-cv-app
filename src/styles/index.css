@@ -2,3 +2,9 @@ body {
   height: 100%;
   margin: 45px;
 }
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}

@@ -22,3 +22,9 @@
   padding-top: 15px;
   padding-bottom: 15px;
 }
+
+.list li {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
