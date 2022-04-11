@@ -19,11 +19,18 @@ class Personal extends Component {
       phone: '212-777-777',
       email: 'johndoe@domain.com',
       linkedIn: 'linkedIn link',
+      about: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+      eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+      minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+      aliquip ex ea commodo consequat. Duis aute irure dolor in
+      reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+      pariatur.`,
       editField: null,
     };
     this.handleInputFocus = this.handleInputFocus.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleRoleChange = this.handleRoleChange.bind(this);
+    this.handleAboutChange = this.handleAboutChange.bind(this);
     this.handleGeneralFieldChange = this.handleGeneralFieldChange.bind(this);
     this.editFieldHandler = this.editFieldHandler.bind(this);
     this.handleClickOutside = this.handleClickOutside.bind(this);
@@ -102,6 +109,31 @@ class Personal extends Component {
           {currentRole}
         </h2>
       );
+    }
+  }
+
+  handleAboutChange(e) {
+    this.setState({
+      about: e.target.value,
+    });
+  }
+
+  renderAboutSection() {
+    const { editField, about } = this.state;
+    if (editField === 'about') {
+      return (
+        <textarea
+          type="text"
+          value={about}
+          onChange={this.handleAboutChange}
+          onFocus={this.handleInputFocus}
+          autoFocus
+          rows={4}
+          cols={180}
+        ></textarea>
+      );
+    } else {
+      return <p onClick={() => this.editFieldHandler('about')}>{about}</p>;
     }
   }
 
@@ -198,6 +230,14 @@ class Personal extends Component {
     } else if (fieldName === 'linkedin') {
       stateName = 'linkedIn';
       stateValue = 'linkedIn link';
+    } else if (fieldName === 'about') {
+      stateName = 'about';
+      stateValue = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+      eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+      minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+      aliquip ex ea commodo consequat. Duis aute irure dolor in
+      reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+      pariatur.`;
     }
     if (stateName && stateValue) {
       if (this.state[stateName] === '') {
@@ -238,14 +278,7 @@ class Personal extends Component {
             <li>{this.renderGeneralField(3)}</li>
           </ul>
         </div>
-        <div className={styles.about}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur.
-        </div>
+        <div className={styles.about}>{this.renderAboutSection()}</div>
       </section>
     );
   }
