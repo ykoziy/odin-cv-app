@@ -249,7 +249,7 @@ class Personal extends Component {
   }
 
   handleClickOutside(e) {
-    if (e.target.nodeName !== 'INPUT') {
+    if (e.target.nodeName !== 'INPUT' && e.target.nodeName !== 'TEXTAREA') {
       this.handleBlankField(this.state.editField);
       this.setState({
         editField: null,
