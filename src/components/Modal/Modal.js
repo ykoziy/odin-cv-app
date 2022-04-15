@@ -9,11 +9,29 @@ class Modal extends Component {
   }
 
   render() {
-    const { modalType, isOpen, closeModalHandler, onSubmitJobEntry } =
-      this.props;
+    const {
+      modalType,
+      isOpen,
+      closeModalHandler,
+      onSubmitJobEntry,
+      entryData,
+    } = this.props;
     let modal;
     if (modalType === 'add-work') {
-      modal = <WorkExperienceModal onSubmitJobEntry={onSubmitJobEntry} />;
+      modal = (
+        <WorkExperienceModal
+          onSubmitJobEntry={onSubmitJobEntry}
+          isEditing={false}
+        />
+      );
+    } else if (modalType === 'edit-work') {
+      modal = (
+        <WorkExperienceModal
+          onSubmitJobEntry={onSubmitJobEntry}
+          isEditing={true}
+          entryData={entryData}
+        />
+      );
     }
     return ReactDOM.createPortal(
       <div

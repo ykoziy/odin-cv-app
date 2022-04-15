@@ -9,6 +9,8 @@ class WorkExperience extends Component {
     super();
     this.state = {
       showModal: false,
+      modalType: 'add-work',
+      editIndex: undefined,
       jobs: [
         {
           key: uniqid(),
@@ -43,13 +45,26 @@ class WorkExperience extends Component {
       ],
     };
     this.handleAddButtonClick = this.handleAddButtonClick.bind(this);
+    this.handleEditButtonClick = this.handleEditButtonClick.bind(this);
     this.onCloseModal = this.onCloseModal.bind(this);
     this.onSubmitJobEntry = this.onSubmitJobEntry.bind(this);
+    this.onEditJobEntry = this.onEditJobEntry.bind(this);
     this.onDeleteEntry = this.onDeleteEntry.bind(this);
   }
 
   handleAddButtonClick() {
-    this.setState({ showModal: true });
+    this.setState({ showModal: true, modalType: 'add-work' });
+  }
+
+  handleEditButtonClick(e) {
+    const index = Number(
+      e.target.parentElement.parentElement.getAttribute('index'),
+    );
+    this.setState({
+      showModal: true,
+      modalType: 'edit-work',
+      editIndex: index,
+    });
   }
 
   onCloseModal() {
@@ -75,6 +90,38 @@ class WorkExperience extends Component {
     this.setState({ showModal: false, jobs: [newEntry, ...this.state.jobs] });
   }
 
+  onEditJobEntry(e) {
+    e.preventDefault();
+    const editIndex = Number(
+      e.target.parentElement.parentElement.getAttribute('index'),
+    );
+
+    const newDates = {};
+    const startDate = e.target['start_date'].value.split('-');
+    newDates.startDate = `${startDate[1]}/${startDate[2]}/${startDate[0]}`;
+    if (e.target['end_date'].value) {
+      const endDate = e.target['end_date'].value.split('-');
+      newDates.endDate = `${endDate[1]}/${endDate[2]}/${endDate[0]}`;
+    } else {
+      newDates.endDate = 'Present';
+    }
+
+    const newJobs = this.state.jobs.map((job, index) => {
+      if (index === editIndex) {
+        const updatedJob = {
+          ...job,
+          ...newDates,
+          title: e.target['job_title'].value,
+          company: e.target['company_name'].value,
+          description: e.target['job_description'].value,
+        };
+        return updatedJob;
+      }
+      return job;
+    });
+    this.setState({ showModal: false, jobs: newJobs });
+  }
+
   onDeleteEntry(e) {
     const deletionIndex = Number(
       e.target.parentElement.parentElement.getAttribute('index'),
@@ -93,6 +140,7 @@ class WorkExperience extends Component {
         description={job.description}
         dates={`${job.startDate} - ${job.endDate}`}
         onDeleteEntry={this.onDeleteEntry}
+        onEditEntry={this.handleEditButtonClick}
       />
     );
   }
@@ -101,14 +149,31 @@ class WorkExperience extends Component {
     const jobs = this.state.jobs.map((job, index) =>
       this.renderEntry(job, index),
     );
-    return (
-      <section className={styles['work-experience']}>
+    let modal;
+    if (this.state.modalType === 'add-work') {
+      modal = (
         <Modal
-          modalType="add-work"
+          modalType={this.state.modalType}
           isOpen={this.state.showModal}
           closeModalHandler={this.onCloseModal}
           onSubmitJobEntry={this.onSubmitJobEntry}
         />
+      );
+    } else if (this.state.modalType === 'edit-work') {
+      modal = (
+        <Modal
+          modalType={this.state.modalType}
+          isOpen={this.state.showModal}
+          closeModalHandler={this.onCloseModal}
+          onSubmitJobEntry={this.onEditJobEntry}
+          entryData={this.state.jobs[this.state.editIndex]}
+        />
+      );
+    }
+
+    return (
+      <section className={styles['work-experience']}>
+        {modal}
         <h2>Work Experience</h2>
         <button onClick={this.handleAddButtonClick}>Add experience</button>
         {jobs}
