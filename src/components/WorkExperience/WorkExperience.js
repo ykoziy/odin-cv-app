@@ -3,10 +3,20 @@ import styles from '../../styles/WorkExperience.module.css';
 import ExperienceEntry from './ExperienceEntry';
 
 class WorkExperience extends Component {
+  constructor(props) {
+    super();
+    this.handleAddButtonClick = this.handleAddButtonClick.bind();
+  }
+
+  handleAddButtonClick() {
+    console.log('add button is clicked');
+  }
+
   render() {
     return (
       <section className={styles['work-experience']}>
         <h2>Work Experience</h2>
+        <button onClick={this.handleAddButtonClick}>Add experience</button>
         <ExperienceEntry
           jobTitle="Job Title 1"
           companyName="Company Name 1"
