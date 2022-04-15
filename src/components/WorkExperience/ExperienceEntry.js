@@ -7,11 +7,13 @@ class ExperienceEntry extends Component {
   }
 
   render() {
-    const { jobTitle, companyName, description, dates } = this.props;
+    const { jobTitle, companyName, description, dates, index, onDeleteEntry } =
+      this.props;
     return (
-      <article className={styles.container}>
+      <article className={styles.container} index={index}>
         <div className={styles['left-container']}>
           <p>{jobTitle}</p>
+          <button onClick={onDeleteEntry}>Delete</button>
         </div>
         <div className={styles['right-container']}>
           <p>{companyName}</p>

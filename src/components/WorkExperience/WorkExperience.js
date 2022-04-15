@@ -45,6 +45,7 @@ class WorkExperience extends Component {
     this.handleAddButtonClick = this.handleAddButtonClick.bind(this);
     this.onCloseModal = this.onCloseModal.bind(this);
     this.onSubmitJobEntry = this.onSubmitJobEntry.bind(this);
+    this.onDeleteEntry = this.onDeleteEntry.bind(this);
   }
 
   handleAddButtonClick() {
@@ -74,20 +75,32 @@ class WorkExperience extends Component {
     this.setState({ showModal: false, jobs: [newEntry, ...this.state.jobs] });
   }
 
-  renderEntry(job) {
+  onDeleteEntry(e) {
+    const deletionIndex = Number(
+      e.target.parentElement.parentElement.getAttribute('index'),
+    );
+    const newJobs = this.state.jobs.filter((_, idx) => deletionIndex !== idx);
+    this.setState({ jobs: newJobs });
+  }
+
+  renderEntry(job, index) {
     return (
       <ExperienceEntry
         key={job.key}
+        index={index}
         jobTitle={job.title}
         companyName={job.company}
         description={job.description}
         dates={`${job.startDate} - ${job.endDate}`}
+        onDeleteEntry={this.onDeleteEntry}
       />
     );
   }
 
   render() {
-    const jobs = this.state.jobs.map((job) => this.renderEntry(job));
+    const jobs = this.state.jobs.map((job, index) =>
+      this.renderEntry(job, index),
+    );
     return (
       <section className={styles['work-experience']}>
         <Modal
