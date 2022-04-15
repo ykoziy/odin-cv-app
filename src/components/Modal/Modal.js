@@ -16,8 +16,9 @@ class Modal extends Component {
       onSubmitJobEntry,
       entryData,
     } = this.props;
-    let modal;
+    let modal, heading;
     if (modalType === 'add-work') {
+      heading = <h4>Adding work experience</h4>;
       modal = (
         <WorkExperienceModal
           onSubmitJobEntry={onSubmitJobEntry}
@@ -25,6 +26,7 @@ class Modal extends Component {
         />
       );
     } else if (modalType === 'edit-work') {
+      heading = <h4>Editing work experience</h4>;
       modal = (
         <WorkExperienceModal
           onSubmitJobEntry={onSubmitJobEntry}
@@ -41,6 +43,7 @@ class Modal extends Component {
       >
         <div className={styles.modal}>
           <div className={styles['modal-toolbar']}>
+            {heading}
             <button onClick={closeModalHandler}>X</button>
           </div>
           <div className={styles['modal-content']}>{modal}</div>
