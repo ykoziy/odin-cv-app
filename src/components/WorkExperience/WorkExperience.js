@@ -1,20 +1,32 @@
 import React, { Component } from 'react';
 import styles from '../../styles/WorkExperience.module.css';
 import ExperienceEntry from './ExperienceEntry';
+import Modal from '../Modal/Modal';
 
 class WorkExperience extends Component {
   constructor(props) {
     super();
-    this.handleAddButtonClick = this.handleAddButtonClick.bind();
+    this.state = { showModal: false };
+    this.handleAddButtonClick = this.handleAddButtonClick.bind(this);
+    this.onCloseModal = this.onCloseModal.bind(this);
   }
 
   handleAddButtonClick() {
-    console.log('add button is clicked');
+    this.setState({ showModal: true });
+  }
+
+  onCloseModal() {
+    this.setState({ showModal: false });
   }
 
   render() {
     return (
       <section className={styles['work-experience']}>
+        <Modal
+          modalType="add-work"
+          isOpen={this.state.showModal}
+          closeModalHandler={this.onCloseModal}
+        />
         <h2>Work Experience</h2>
         <button onClick={this.handleAddButtonClick}>Add experience</button>
         <ExperienceEntry
