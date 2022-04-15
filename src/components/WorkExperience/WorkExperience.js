@@ -22,7 +22,7 @@ class WorkExperience extends Component {
           id cursus. In vitae turpis massa sed elementum tempus egestas. Vitae
           tempus quam pellentesque nec nam aliquam.
           `,
-          startDate: 'start date',
+          startDate: '01/01/2002',
           endDate: 'Present',
         },
         {
@@ -37,8 +37,8 @@ class WorkExperience extends Component {
           id cursus. In vitae turpis massa sed elementum tempus egestas. Vitae
           tempus quam pellentesque nec nam aliquam.
           `,
-          startDate: 'start date',
-          endDate: 'end date',
+          startDate: '01/01/2000',
+          endDate: '12/30/2002',
         },
       ],
     };
