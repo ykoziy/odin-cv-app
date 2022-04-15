@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
 
 class WorkExperienceModal extends Component {
+  constructor(props) {
+    super();
+  }
+
   render() {
+    const { onSubmitJobEntry } = this.props;
     return (
-      <form>
+      <form onSubmit={onSubmitJobEntry}>
         <label htmlFor="job_title">Job title: </label>
         <input
           type="text"
@@ -25,7 +30,7 @@ class WorkExperienceModal extends Component {
         <input type="date" name="start_date" id="start_date" required></input>
 
         <label htmlFor="end_date">End date: </label>
-        <input type="date" name="start_date" id="start_date"></input>
+        <input type="date" name="end_date" id="end_date"></input>
 
         <label htmlFor="job_description">Description: </label>
         <textarea

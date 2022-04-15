@@ -44,6 +44,7 @@ class WorkExperience extends Component {
     };
     this.handleAddButtonClick = this.handleAddButtonClick.bind(this);
     this.onCloseModal = this.onCloseModal.bind(this);
+    this.onSubmitJobEntry = this.onSubmitJobEntry.bind(this);
   }
 
   handleAddButtonClick() {
@@ -52,6 +53,25 @@ class WorkExperience extends Component {
 
   onCloseModal() {
     this.setState({ showModal: false });
+  }
+
+  onSubmitJobEntry(e) {
+    e.preventDefault();
+    let newEntry = {
+      key: uniqid(),
+      title: e.target['job_title'].value,
+      company: e.target['company_name'].value,
+      description: e.target['job_description'].value,
+    };
+    const startDate = e.target['start_date'].value.split('-');
+    newEntry.startDate = `${startDate[1]}/${startDate[2]}/${startDate[0]}`;
+    if (e.target['end_date'].value) {
+      const endDate = e.target['end_date'].value.split('-');
+      newEntry.endDate = `${endDate[1]}/${endDate[2]}/${endDate[0]}`;
+    } else {
+      newEntry.endDate = 'Present';
+    }
+    this.setState({ showModal: false, jobs: [newEntry, ...this.state.jobs] });
   }
 
   renderEntry(job) {
@@ -74,6 +94,7 @@ class WorkExperience extends Component {
           modalType="add-work"
           isOpen={this.state.showModal}
           closeModalHandler={this.onCloseModal}
+          onSubmitJobEntry={this.onSubmitJobEntry}
         />
         <h2>Work Experience</h2>
         <button onClick={this.handleAddButtonClick}>Add experience</button>

@@ -4,11 +4,16 @@ import styles from '../../styles/Modal.module.css';
 import WorkExperienceModal from './WorkExperienceModal';
 
 class Modal extends Component {
+  constructor(props) {
+    super();
+  }
+
   render() {
-    const { modalType, isOpen, closeModalHandler } = this.props;
+    const { modalType, isOpen, closeModalHandler, onSubmitJobEntry } =
+      this.props;
     let modal;
     if (modalType === 'add-work') {
-      modal = <WorkExperienceModal />;
+      modal = <WorkExperienceModal onSubmitJobEntry={onSubmitJobEntry} />;
     }
     return ReactDOM.createPortal(
       <div
