@@ -5,6 +5,14 @@ class EducationModal extends Component {
     super();
   }
 
+  setInputDate(date) {
+    if (date === 'Present') {
+      return '';
+    } else {
+      return new Date(date).toLocaleDateString('en-CA');
+    }
+  }
+
   render() {
     const { onSubmitEntry, isEditing, entryData } = this.props;
     let button;

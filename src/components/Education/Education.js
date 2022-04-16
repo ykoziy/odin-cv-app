@@ -10,6 +10,7 @@ class Education extends Component {
     this.state = {
       showModal: false,
       modalType: 'add-education',
+      editIndex: undefined,
       education: [
         {
           key: uniqid(),
@@ -40,7 +41,14 @@ class Education extends Component {
   }
 
   handleEditButtonClick(e) {
-    console.log('editing education entry');
+    const index = Number(
+      e.target.parentElement.parentElement.getAttribute('index'),
+    );
+    this.setState({
+      showModal: true,
+      modalType: 'edit-education',
+      editIndex: index,
+    });
   }
 
   onCloseModal() {
@@ -69,7 +77,34 @@ class Education extends Component {
   }
 
   onEditEntry(e) {
-    console.log('MODAL: editing education entry');
+    e.preventDefault();
+    const editIndex = Number(
+      e.target.parentElement.parentElement.getAttribute('index'),
+    );
+
+    const newDates = {};
+    const startDate = e.target['start_date'].value.split('-');
+    newDates.startDate = `${startDate[1]}/${startDate[2]}/${startDate[0]}`;
+    if (e.target['end_date'].value) {
+      const endDate = e.target['end_date'].value.split('-');
+      newDates.endDate = `${endDate[1]}/${endDate[2]}/${endDate[0]}`;
+    } else {
+      newDates.endDate = 'Present';
+    }
+
+    const newList = this.state.education.map((education, index) => {
+      if (index === editIndex) {
+        const updatedEducation = {
+          ...education,
+          ...newDates,
+          title: e.target['education_title'].value,
+          schoolName: e.target['school_name'].value,
+        };
+        return updatedEducation;
+      }
+      return education;
+    });
+    this.setState({ showModal: false, education: newList });
   }
 
   onDeleteEntry(e) {
@@ -111,6 +146,15 @@ class Education extends Component {
         />
       );
     } else if (this.state.modalType === 'edit-education') {
+      modal = (
+        <Modal
+          modalType={this.state.modalType}
+          isOpen={this.state.showModal}
+          closeModalHandler={this.onCloseModal}
+          onSubmitEntry={this.onEditEntry}
+          entryData={this.state.education[this.state.editIndex]}
+        />
+      );
     }
     return (
       <section className={styles.education}>
