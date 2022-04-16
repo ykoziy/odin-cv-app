@@ -24,6 +24,25 @@ class Education extends Component {
         },
       ],
     };
+    this.handleAddButtonClick = this.handleAddButtonClick.bind(this);
+    this.onEditEntry = this.onEditEntry.bind(this);
+    this.onDeleteEntry = this.onDeleteEntry.bind(this);
+  }
+
+  handleAddButtonClick() {
+    console.log('Adding education');
+  }
+
+  handleEditButtonClick(e) {
+    console.log('editing education entry');
+  }
+
+  onDeleteEntry(e) {
+    console.log('deleting education entry');
+  }
+
+  onEditEntry(e) {
+    console.log('MODAL: editing education entry');
   }
 
   renderEntry(education) {
@@ -33,6 +52,8 @@ class Education extends Component {
         title={education.title}
         schoolName={education.schoolName}
         dates={`${education.startDate} - ${education.endDate}`}
+        onDeleteEntry={this.onDeleteEntry}
+        onEditEntry={this.handleEditButtonClick}
       />
     );
   }
@@ -44,6 +65,7 @@ class Education extends Component {
     return (
       <section className={styles.education}>
         <h2>Education</h2>
+        <button onClick={this.handleAddButtonClick}>Add education</button>
         {educationList}
       </section>
     );
