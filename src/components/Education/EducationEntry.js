@@ -11,7 +11,6 @@ class EducationEntry extends Component {
       this.props;
     return (
       <article className={styles.container} index={index}>
-        {' '}
         <div className={styles['left-container']}>
           <p>{title}</p>
           <button onClick={onDeleteEntry}>Delete</button>

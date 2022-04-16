@@ -1,0 +1,10 @@
+.section-header {
+  display: flex;
+  justify-self: start;
+  align-items: center;
+  gap: 10px;
+}
+
+.add-btn {
+  height: fit-content;
+}

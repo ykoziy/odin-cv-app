@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styles from '../../styles/Education.module.css';
+import sharedStyles from '../../styles/SharedStyles.module.css';
 import EducationEntry from './EducationEntry';
 import Modal from '../Modal/Modal';
 import uniqid from 'uniqid';
@@ -154,8 +155,15 @@ class Education extends Component {
     return (
       <section className={styles.education}>
         {modal}
-        <h2>Education</h2>
-        <button onClick={this.handleAddButtonClick}>Add education</button>
+        <div className={sharedStyles['section-header']}>
+          <h2>Education</h2>
+          <button
+            className={sharedStyles['add-btn']}
+            onClick={this.handleAddButtonClick}
+          >
+            Add education
+          </button>
+        </div>
         {educationList}
       </section>
     );

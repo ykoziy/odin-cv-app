@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styles from '../../styles/WorkExperience.module.css';
+import sharedStyles from '../../styles/SharedStyles.module.css';
 import ExperienceEntry from './ExperienceEntry';
 import Modal from '../Modal/Modal';
 import uniqid from 'uniqid';
@@ -169,8 +170,15 @@ class WorkExperience extends Component {
     return (
       <section className={styles['work-experience']}>
         {modal}
-        <h2>Work Experience</h2>
-        <button onClick={this.handleAddButtonClick}>Add experience</button>
+        <div className={sharedStyles['section-header']}>
+          <h2>Work Experience</h2>
+          <button
+            className={sharedStyles['add-btn']}
+            onClick={this.handleAddButtonClick}
+          >
+            Add experience
+          </button>
+        </div>
         {jobs}
       </section>
     );
