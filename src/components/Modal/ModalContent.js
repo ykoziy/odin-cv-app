@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import styles from '../../styles/Modal.module.css';
 import { setInputDate } from '../../util/util.js';
 
 class ModalContent extends Component {
@@ -9,41 +10,50 @@ class ModalContent extends Component {
   renderEducationModal(entryData, button) {
     return (
       <React.Fragment>
-        <label htmlFor="education_title">Education title: </label>
-        <input
-          type="text"
-          name="education_title"
-          id="education_title"
-          required
-          placeholder="enter your education title..."
-          defaultValue={entryData ? entryData.title : ''}
-        ></input>
-        <label htmlFor="school_name">School name: </label>
-        <input
-          type="text"
-          name="school_name"
-          id="school_name"
-          required
-          placeholder="enter school name..."
-          defaultValue={entryData ? entryData.schoolName : ''}
-        ></input>
+        <div className={styles['modal-form-row']}>
+          <label htmlFor="education_title">Education title: </label>
+          <input
+            type="text"
+            name="education_title"
+            id="education_title"
+            required
+            placeholder="enter your education title..."
+            defaultValue={entryData ? entryData.title : ''}
+          ></input>
+        </div>
 
-        <label htmlFor="start_date">Start date: </label>
-        <input
-          type="date"
-          name="start_date"
-          id="start_date"
-          required
-          defaultValue={entryData ? setInputDate(entryData.startDate) : ''}
-        ></input>
+        <div className={styles['modal-form-row']}>
+          <label htmlFor="school_name">School name: </label>
+          <input
+            type="text"
+            name="school_name"
+            id="school_name"
+            required
+            placeholder="enter school name..."
+            defaultValue={entryData ? entryData.schoolName : ''}
+          ></input>
+        </div>
 
-        <label htmlFor="end_date">End date: </label>
-        <input
-          type="date"
-          name="end_date"
-          id="end_date"
-          defaultValue={entryData ? setInputDate(entryData.endDate) : ''}
-        ></input>
+        <div className={styles['modal-form-row']}>
+          <label htmlFor="start_date">Start date: </label>
+          <input
+            type="date"
+            name="start_date"
+            id="start_date"
+            required
+            defaultValue={entryData ? setInputDate(entryData.startDate) : ''}
+          ></input>
+        </div>
+
+        <div className={styles['modal-form-row']}>
+          <label htmlFor="end_date">End date: </label>
+          <input
+            type="date"
+            name="end_date"
+            id="end_date"
+            defaultValue={entryData ? setInputDate(entryData.endDate) : ''}
+          ></input>
+        </div>
         {button}
       </React.Fragment>
     );
@@ -52,41 +62,50 @@ class ModalContent extends Component {
   renderWorkModal(entryData, button) {
     return (
       <React.Fragment>
-        <label htmlFor="job_title">Job title: </label>
-        <input
-          type="text"
-          name="job_title"
-          id="job_title"
-          required
-          placeholder="enter your job title..."
-          defaultValue={entryData ? entryData.title : ''}
-        ></input>
-        <label htmlFor="company_name">Company name: </label>
-        <input
-          type="text"
-          name="company_name"
-          id="company_name"
-          required
-          placeholder="enter company name..."
-          defaultValue={entryData ? entryData.company : ''}
-        ></input>
+        <div className={styles['modal-form-row']}>
+          <label htmlFor="job_title">Job title: </label>
+          <input
+            type="text"
+            name="job_title"
+            id="job_title"
+            required
+            placeholder="enter your job title..."
+            defaultValue={entryData ? entryData.title : ''}
+          ></input>
+        </div>
 
-        <label htmlFor="start_date">Start date: </label>
-        <input
-          type="date"
-          name="start_date"
-          id="start_date"
-          required
-          defaultValue={entryData ? setInputDate(entryData.startDate) : ''}
-        ></input>
+        <div className={styles['modal-form-row']}>
+          <label htmlFor="company_name">Company name: </label>
+          <input
+            type="text"
+            name="company_name"
+            id="company_name"
+            required
+            placeholder="enter company name..."
+            defaultValue={entryData ? entryData.company : ''}
+          ></input>
+        </div>
 
-        <label htmlFor="end_date">End date: </label>
-        <input
-          type="date"
-          name="end_date"
-          id="end_date"
-          defaultValue={entryData ? setInputDate(entryData.endDate) : ''}
-        ></input>
+        <div className={styles['modal-form-row']}>
+          <label htmlFor="start_date">Start date: </label>
+          <input
+            type="date"
+            name="start_date"
+            id="start_date"
+            required
+            defaultValue={entryData ? setInputDate(entryData.startDate) : ''}
+          ></input>
+        </div>
+
+        <div className={styles['modal-form-row']}>
+          <label htmlFor="end_date">End date: </label>
+          <input
+            type="date"
+            name="end_date"
+            id="end_date"
+            defaultValue={entryData ? setInputDate(entryData.endDate) : ''}
+          ></input>
+        </div>
 
         <label htmlFor="job_description">Description: </label>
         <textarea
