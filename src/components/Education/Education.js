@@ -38,7 +38,13 @@ class Education extends Component {
   }
 
   onDeleteEntry(e) {
-    console.log('deleting education entry');
+    const deletionIndex = Number(
+      e.target.parentElement.parentElement.getAttribute('index'),
+    );
+    const newList = this.state.education.filter(
+      (_, idx) => deletionIndex !== idx,
+    );
+    this.setState({ education: newList });
   }
 
   onEditEntry(e) {
