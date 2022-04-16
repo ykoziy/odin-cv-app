@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 import styles from '../../styles/WorkExperience.module.css';
 import sharedStyles from '../../styles/SharedStyles.module.css';
 import ExperienceEntry from './ExperienceEntry';
@@ -176,7 +178,7 @@ class WorkExperience extends Component {
             className={sharedStyles['add-btn']}
             onClick={this.handleAddButtonClick}
           >
-            Add experience
+            <FontAwesomeIcon icon={faSquarePlus} size="2x" />
           </button>
         </div>
         {jobs}

@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSquareMinus, faSquarePen } from '@fortawesome/free-solid-svg-icons';
+import sharedStyles from '../../styles/SharedStyles.module.css';
 import styles from '../../styles/ExperienceEntry.module.css';
 
 class ExperienceEntry extends Component {
@@ -20,8 +23,15 @@ class ExperienceEntry extends Component {
       <article className={styles.container} index={index}>
         <div className={styles['left-container']}>
           <p>{jobTitle}</p>
-          <button onClick={onDeleteEntry}>Delete</button>
-          <button onClick={onEditEntry}>Edit</button>
+          <button
+            className={sharedStyles['delete-btn']}
+            onClick={onDeleteEntry}
+          >
+            <FontAwesomeIcon icon={faSquareMinus} size="lg" />
+          </button>
+          <button className={sharedStyles['edit-btn']} onClick={onEditEntry}>
+            <FontAwesomeIcon icon={faSquarePen} size="lg" />
+          </button>
         </div>
         <div className={styles['right-container']}>
           <p>{companyName}</p>

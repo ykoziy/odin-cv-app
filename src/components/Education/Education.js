@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 import styles from '../../styles/Education.module.css';
 import sharedStyles from '../../styles/SharedStyles.module.css';
 import EducationEntry from './EducationEntry';
@@ -161,7 +163,7 @@ class Education extends Component {
             className={sharedStyles['add-btn']}
             onClick={this.handleAddButtonClick}
           >
-            Add education
+            <FontAwesomeIcon icon={faSquarePlus} size="2x" />
           </button>
         </div>
         {educationList}

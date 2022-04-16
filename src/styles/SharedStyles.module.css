@@ -5,6 +5,24 @@
   gap: 10px;
 }
 
-.add-btn {
+.add-btn,
+.delete-btn,
+.edit-btn {
   height: fit-content;
+  width: fit-content;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.delete-btn {
+  color: red;
+}
+
+.edit-btn {
+  color: orange;
+}
+
+.add-btn {
+  color: green;
 }
