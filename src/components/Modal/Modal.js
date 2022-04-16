@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import styles from '../../styles/Modal.module.css';
 import WorkExperienceModal from './WorkExperienceModal';
+import EducationModal from './EducationModal';
 
 class Modal extends Component {
   constructor(props) {
@@ -34,6 +35,8 @@ class Modal extends Component {
           entryData={entryData}
         />
       );
+    } else if (modalType === 'add-education') {
+      <EducationModal isEditing={false} entryData={entryData} />;
     }
     return ReactDOM.createPortal(
       <div
