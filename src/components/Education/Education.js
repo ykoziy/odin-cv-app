@@ -3,6 +3,7 @@ import styles from '../../styles/Education.module.css';
 import EducationEntry from './EducationEntry';
 import Modal from '../Modal/Modal';
 import uniqid from 'uniqid';
+import { convertInputDates } from '../../util/util.js';
 
 class Education extends Component {
   constructor(props) {
@@ -61,15 +62,12 @@ class Education extends Component {
       key: uniqid(),
       title: e.target['education_title'].value,
       schoolName: e.target['school_name'].value,
+      ...convertInputDates(
+        e.target['start_date'].value,
+        e.target['end_date'].value,
+      ),
     };
-    const startDate = e.target['start_date'].value.split('-');
-    newEntry.startDate = `${startDate[1]}/${startDate[2]}/${startDate[0]}`;
-    if (e.target['end_date'].value) {
-      const endDate = e.target['end_date'].value.split('-');
-      newEntry.endDate = `${endDate[1]}/${endDate[2]}/${endDate[0]}`;
-    } else {
-      newEntry.endDate = 'Present';
-    }
+
     this.setState({
       showModal: false,
       education: [newEntry, ...this.state.education],
@@ -82,15 +80,12 @@ class Education extends Component {
       e.target.parentElement.parentElement.getAttribute('index'),
     );
 
-    const newDates = {};
-    const startDate = e.target['start_date'].value.split('-');
-    newDates.startDate = `${startDate[1]}/${startDate[2]}/${startDate[0]}`;
-    if (e.target['end_date'].value) {
-      const endDate = e.target['end_date'].value.split('-');
-      newDates.endDate = `${endDate[1]}/${endDate[2]}/${endDate[0]}`;
-    } else {
-      newDates.endDate = 'Present';
-    }
+    const newDates = {
+      ...convertInputDates(
+        e.target['start_date'].value,
+        e.target['end_date'].value,
+      ),
+    };
 
     const newList = this.state.education.map((education, index) => {
       if (index === editIndex) {

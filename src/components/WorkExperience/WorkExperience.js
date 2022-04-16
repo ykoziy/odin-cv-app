@@ -3,6 +3,7 @@ import styles from '../../styles/WorkExperience.module.css';
 import ExperienceEntry from './ExperienceEntry';
 import Modal from '../Modal/Modal';
 import uniqid from 'uniqid';
+import { convertInputDates } from '../../util/util.js';
 
 class WorkExperience extends Component {
   constructor(props) {
@@ -79,15 +80,11 @@ class WorkExperience extends Component {
       title: e.target['job_title'].value,
       company: e.target['company_name'].value,
       description: e.target['job_description'].value,
+      ...convertInputDates(
+        e.target['start_date'].value,
+        e.target['end_date'].value,
+      ),
     };
-    const startDate = e.target['start_date'].value.split('-');
-    newEntry.startDate = `${startDate[1]}/${startDate[2]}/${startDate[0]}`;
-    if (e.target['end_date'].value) {
-      const endDate = e.target['end_date'].value.split('-');
-      newEntry.endDate = `${endDate[1]}/${endDate[2]}/${endDate[0]}`;
-    } else {
-      newEntry.endDate = 'Present';
-    }
     this.setState({ showModal: false, jobs: [newEntry, ...this.state.jobs] });
   }
 
@@ -97,15 +94,12 @@ class WorkExperience extends Component {
       e.target.parentElement.parentElement.getAttribute('index'),
     );
 
-    const newDates = {};
-    const startDate = e.target['start_date'].value.split('-');
-    newDates.startDate = `${startDate[1]}/${startDate[2]}/${startDate[0]}`;
-    if (e.target['end_date'].value) {
-      const endDate = e.target['end_date'].value.split('-');
-      newDates.endDate = `${endDate[1]}/${endDate[2]}/${endDate[0]}`;
-    } else {
-      newDates.endDate = 'Present';
-    }
+    const newDates = {
+      ...convertInputDates(
+        e.target['start_date'].value,
+        e.target['end_date'].value,
+      ),
+    };
 
     const newJobs = this.state.jobs.map((job, index) => {
       if (index === editIndex) {
