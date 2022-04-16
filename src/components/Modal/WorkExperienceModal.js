@@ -14,7 +14,7 @@ class WorkExperienceModal extends Component {
   }
 
   render() {
-    const { onSubmitJobEntry, isEditing, entryData } = this.props;
+    const { onSubmitEntry, isEditing, entryData } = this.props;
     let button;
     if (!isEditing) {
       button = <button type="submit">Submit</button>;
@@ -22,7 +22,7 @@ class WorkExperienceModal extends Component {
       button = <button type="submit">Save</button>;
     }
     return (
-      <form onSubmit={onSubmitJobEntry}>
+      <form onSubmit={onSubmitEntry}>
         <label htmlFor="job_title">Job title: </label>
         <input
           type="text"

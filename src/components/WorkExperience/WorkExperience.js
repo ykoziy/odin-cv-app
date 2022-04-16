@@ -47,8 +47,8 @@ class WorkExperience extends Component {
     this.handleAddButtonClick = this.handleAddButtonClick.bind(this);
     this.handleEditButtonClick = this.handleEditButtonClick.bind(this);
     this.onCloseModal = this.onCloseModal.bind(this);
-    this.onSubmitJobEntry = this.onSubmitJobEntry.bind(this);
-    this.onEditJobEntry = this.onEditJobEntry.bind(this);
+    this.onSubmitEntry = this.onSubmitEntry.bind(this);
+    this.onEditEntry = this.onEditEntry.bind(this);
     this.onDeleteEntry = this.onDeleteEntry.bind(this);
   }
 
@@ -71,7 +71,8 @@ class WorkExperience extends Component {
     this.setState({ showModal: false });
   }
 
-  onSubmitJobEntry(e) {
+  onSubmitEntry(e) {
+    console.log('adding');
     e.preventDefault();
     let newEntry = {
       key: uniqid(),
@@ -90,7 +91,7 @@ class WorkExperience extends Component {
     this.setState({ showModal: false, jobs: [newEntry, ...this.state.jobs] });
   }
 
-  onEditJobEntry(e) {
+  onEditEntry(e) {
     e.preventDefault();
     const editIndex = Number(
       e.target.parentElement.parentElement.getAttribute('index'),
@@ -156,7 +157,7 @@ class WorkExperience extends Component {
           modalType={this.state.modalType}
           isOpen={this.state.showModal}
           closeModalHandler={this.onCloseModal}
-          onSubmitJobEntry={this.onSubmitJobEntry}
+          onSubmitEntry={this.onSubmitEntry}
         />
       );
     } else if (this.state.modalType === 'edit-work') {
@@ -165,7 +166,7 @@ class WorkExperience extends Component {
           modalType={this.state.modalType}
           isOpen={this.state.showModal}
           closeModalHandler={this.onCloseModal}
-          onSubmitJobEntry={this.onEditJobEntry}
+          onSubmitEntry={this.onEditEntry}
           entryData={this.state.jobs[this.state.editIndex]}
         />
       );
