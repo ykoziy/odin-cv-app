@@ -29,7 +29,9 @@ class Modal extends Component {
       );
     } else if (modalType === 'add-education') {
       heading = <h4>Adding education</h4>;
-      modal = <EducationModal isEditing={false} />;
+      modal = (
+        <EducationModal onSubmitEntry={onSubmitEntry} isEditing={false} />
+      );
     }
     return ReactDOM.createPortal(
       <div

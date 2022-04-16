@@ -51,7 +51,7 @@ class Education extends Component {
     e.preventDefault();
     let newEntry = {
       key: uniqid(),
-      title: e.target['job_title'].value,
+      title: e.target['education_title'].value,
       schoolName: e.target['school_name'].value,
     };
     const startDate = e.target['start_date'].value.split('-');
