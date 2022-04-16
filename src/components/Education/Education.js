@@ -45,10 +45,11 @@ class Education extends Component {
     console.log('MODAL: editing education entry');
   }
 
-  renderEntry(education) {
+  renderEntry(education, index) {
     return (
       <EducationEntry
         key={education.key}
+        index={index}
         title={education.title}
         schoolName={education.schoolName}
         dates={`${education.startDate} - ${education.endDate}`}
@@ -59,8 +60,8 @@ class Education extends Component {
   }
 
   render() {
-    const educationList = this.state.education.map((education) =>
-      this.renderEntry(education),
+    const educationList = this.state.education.map((education, index) =>
+      this.renderEntry(education, index),
     );
     return (
       <section className={styles.education}>

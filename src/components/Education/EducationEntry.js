@@ -7,9 +7,10 @@ class EducationEntry extends Component {
   }
 
   render() {
-    const { title, schoolName, dates, onDeleteEntry, onEditEntry } = this.props;
+    const { title, schoolName, dates, index, onDeleteEntry, onEditEntry } =
+      this.props;
     return (
-      <article className={styles.container}>
+      <article className={styles.container} index={index}>
         {' '}
         <div className={styles['left-container']}>
           <p>{title}</p>
