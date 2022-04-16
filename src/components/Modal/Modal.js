@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSquareXmark } from '@fortawesome/free-solid-svg-icons';
+import sharedStyles from '../../styles/SharedStyles.module.css';
 import styles from '../../styles/Modal.module.css';
 import ModalContent from './ModalContent';
 
@@ -60,7 +63,12 @@ class Modal extends Component {
         <div className={styles.modal}>
           <div className={styles['modal-toolbar']}>
             {heading}
-            <button onClick={closeModalHandler}>X</button>
+            <button
+              className={sharedStyles['close-btn']}
+              onClick={closeModalHandler}
+            >
+              <FontAwesomeIcon icon={faSquareXmark} size="2x" />
+            </button>
           </div>
           <div className={styles['modal-content']}>{modal}</div>
         </div>
