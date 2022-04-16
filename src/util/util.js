@@ -10,3 +10,11 @@ export function convertInputDates(startDateStr, endDateStr) {
   }
   return newDates;
 }
+
+export function setInputDate(date) {
+  if (date === 'Present') {
+    return '';
+  } else {
+    return new Date(date).toLocaleDateString('en-CA');
+  }
+}

@@ -1,16 +1,9 @@
 import React, { Component } from 'react';
+import { setInputDate } from '../../util/util.js';
 
 class WorkExperienceModal extends Component {
   constructor(props) {
     super();
-  }
-
-  setInputDate(date) {
-    if (date === 'Present') {
-      return '';
-    } else {
-      return new Date(date).toLocaleDateString('en-CA');
-    }
   }
 
   render() {
@@ -48,7 +41,7 @@ class WorkExperienceModal extends Component {
           name="start_date"
           id="start_date"
           required
-          defaultValue={entryData ? this.setInputDate(entryData.startDate) : ''}
+          defaultValue={entryData ? setInputDate(entryData.startDate) : ''}
         ></input>
 
         <label htmlFor="end_date">End date: </label>
@@ -56,7 +49,7 @@ class WorkExperienceModal extends Component {
           type="date"
           name="end_date"
           id="end_date"
-          defaultValue={entryData ? this.setInputDate(entryData.endDate) : ''}
+          defaultValue={entryData ? setInputDate(entryData.endDate) : ''}
         ></input>
 
         <label htmlFor="job_description">Description: </label>

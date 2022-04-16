@@ -1,16 +1,9 @@
 import React, { Component } from 'react';
+import { setInputDate } from '../../util/util.js';
 
 class EducationModal extends Component {
   constructor(props) {
     super();
-  }
-
-  setInputDate(date) {
-    if (date === 'Present') {
-      return '';
-    } else {
-      return new Date(date).toLocaleDateString('en-CA');
-    }
   }
 
   render() {
@@ -49,7 +42,7 @@ class EducationModal extends Component {
           name="start_date"
           id="start_date"
           required
-          defaultValue={entryData ? this.setInputDate(entryData.startDate) : ''}
+          defaultValue={entryData ? setInputDate(entryData.startDate) : ''}
         ></input>
 
         <label htmlFor="end_date">End date: </label>
@@ -57,7 +50,7 @@ class EducationModal extends Component {
           type="date"
           name="end_date"
           id="end_date"
-          defaultValue={entryData ? this.setInputDate(entryData.endDate) : ''}
+          defaultValue={entryData ? setInputDate(entryData.endDate) : ''}
         ></input>
         {button}
       </form>
