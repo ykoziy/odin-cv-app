@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import styles from '../../styles/Modal.module.css';
-import WorkExperienceModal from './WorkExperienceModal';
-import EducationModal from './EducationModal';
+import ModalContent from './ModalContent';
 
 class Modal extends Component {
   constructor(props) {
@@ -16,28 +15,38 @@ class Modal extends Component {
     if (modalType === 'add-work') {
       heading = <h4>Adding work experience</h4>;
       modal = (
-        <WorkExperienceModal onSubmitEntry={onSubmitEntry} isEditing={false} />
+        <ModalContent
+          onSubmitEntry={onSubmitEntry}
+          isEditing={false}
+          modalType="work"
+        />
       );
     } else if (modalType === 'edit-work') {
       heading = <h4>Editing work experience</h4>;
       modal = (
-        <WorkExperienceModal
+        <ModalContent
           onSubmitEntry={onSubmitEntry}
           isEditing={true}
+          modalType="work"
           entryData={entryData}
         />
       );
     } else if (modalType === 'add-education') {
       heading = <h4>Adding education</h4>;
       modal = (
-        <EducationModal onSubmitEntry={onSubmitEntry} isEditing={false} />
+        <ModalContent
+          onSubmitEntry={onSubmitEntry}
+          isEditing={false}
+          modalType="education"
+        />
       );
     } else if (modalType === 'edit-education') {
       heading = <h4>Editing education</h4>;
       modal = (
-        <EducationModal
+        <ModalContent
           onSubmitEntry={onSubmitEntry}
           isEditing={true}
+          modalType="education"
           entryData={entryData}
         />
       );
