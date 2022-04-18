@@ -116,6 +116,7 @@ class Education extends Component {
   }
 
   renderEntry(education, index) {
+    const { isEditingCv } = this.props;
     return (
       <EducationEntry
         key={education.key}
@@ -125,11 +126,13 @@ class Education extends Component {
         dates={`${education.startDate} - ${education.endDate}`}
         onDeleteEntry={this.onDeleteEntry}
         onEditEntry={this.handleEditButtonClick}
+        isEditingCv={isEditingCv}
       />
     );
   }
 
   render() {
+    const { isEditingCv } = this.props;
     const educationList = this.state.education.map((education, index) =>
       this.renderEntry(education, index),
     );
@@ -154,17 +157,27 @@ class Education extends Component {
         />
       );
     }
-    return (
-      <section className={styles.education}>
-        {modal}
-        <div className={sharedStyles['section-header']}>
-          <h2>Education</h2>
+
+    let editElement;
+    if (isEditingCv) {
+      editElement = (
+        <React.Fragment>
           <button
             className={sharedStyles['add-btn']}
             onClick={this.handleAddButtonClick}
           >
             <FontAwesomeIcon icon={faSquarePlus} size="2x" />
           </button>
+        </React.Fragment>
+      );
+    }
+
+    return (
+      <section className={styles.education}>
+        {modal}
+        <div className={sharedStyles['section-header']}>
+          <h2>Education</h2>
+          {editElement}
         </div>
         {educationList}
       </section>

@@ -18,11 +18,13 @@ class ExperienceEntry extends Component {
       index,
       onDeleteEntry,
       onEditEntry,
+      isEditingCv,
     } = this.props;
-    return (
-      <article className={styles.container} index={index}>
-        <div className={styles['left-container']}>
-          <p>{jobTitle}</p>
+
+    let editElements;
+    if (isEditingCv) {
+      editElements = (
+        <React.Fragment>
           <button
             className={sharedStyles['delete-btn']}
             onClick={onDeleteEntry}
@@ -32,6 +34,15 @@ class ExperienceEntry extends Component {
           <button className={sharedStyles['edit-btn']} onClick={onEditEntry}>
             <FontAwesomeIcon icon={faSquarePen} size="lg" />
           </button>
+        </React.Fragment>
+      );
+    }
+
+    return (
+      <article className={styles.container} index={index}>
+        <div className={styles['left-container']}>
+          <p>{jobTitle}</p>
+          {editElements}
         </div>
         <div className={styles['right-container']}>
           <p>{companyName}</p>

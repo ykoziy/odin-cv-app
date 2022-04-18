@@ -10,12 +10,20 @@ class EducationEntry extends Component {
   }
 
   render() {
-    const { title, schoolName, dates, index, onDeleteEntry, onEditEntry } =
-      this.props;
-    return (
-      <article className={styles.container} index={index}>
-        <div className={styles['left-container']}>
-          <p>{title}</p>
+    const {
+      title,
+      schoolName,
+      dates,
+      index,
+      onDeleteEntry,
+      onEditEntry,
+      isEditingCv,
+    } = this.props;
+
+    let editElements;
+    if (isEditingCv) {
+      editElements = (
+        <React.Fragment>
           <button
             className={sharedStyles['delete-btn']}
             onClick={onDeleteEntry}
@@ -25,6 +33,15 @@ class EducationEntry extends Component {
           <button className={sharedStyles['edit-btn']} onClick={onEditEntry}>
             <FontAwesomeIcon icon={faSquarePen} size="lg" />
           </button>
+        </React.Fragment>
+      );
+    }
+
+    return (
+      <article className={styles.container} index={index}>
+        <div className={styles['left-container']}>
+          <p>{title}</p>
+          {editElements}
         </div>
         <div className={styles['right-container']}>
           <p>{schoolName}</p>

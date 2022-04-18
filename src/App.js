@@ -5,13 +5,49 @@ import Education from './components/Education/Education';
 import styles from './styles/App.module.css';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { isEditingCv: true };
+    this.onClickEdit = this.onClickEdit.bind(this);
+    this.onClickView = this.onClickView.bind(this);
+  }
+
+  onClickEdit() {
+    this.setState({ isEditingCv: true });
+  }
+
+  onClickView() {
+    this.setState({ isEditingCv: false });
+  }
   render() {
+    const isEditingCv = this.state.isEditingCv;
     return (
-      <main className={styles['app-container']}>
-        <Personal />
-        <WorkExperience />
-        <Education />
-      </main>
+      <React.Fragment>
+        <header>
+          <h1>CV Builder Application</h1>
+          <div className={styles.buttons}>
+            <button
+              onClick={this.onClickEdit}
+              disabled={isEditingCv ? true : false}
+            >
+              Edit mode
+            </button>
+            <button
+              onClick={this.onClickView}
+              disabled={isEditingCv ? false : true}
+            >
+              View mode
+            </button>
+            <div className={styles['button-divider']}></div>
+          </div>
+        </header>
+        <main className={styles['app-container']}>
+          <Personal isEditingCv={isEditingCv} />
+          <WorkExperience isEditingCv={isEditingCv} />
+          <Education isEditingCv={isEditingCv} />
+        </main>
+      </React.Fragment>
     );
   }
 }

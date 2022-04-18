@@ -204,9 +204,12 @@ class Personal extends Component {
   }
 
   editFieldHandler(fieldName) {
-    this.setState({
-      editField: fieldName,
-    });
+    const { isEditingCv } = this.props;
+    if (isEditingCv) {
+      this.setState({
+        editField: fieldName,
+      });
+    }
   }
 
   handleBlankField(fieldName) {

@@ -10,7 +10,7 @@ import { convertInputDates } from '../../util/util.js';
 
 class WorkExperience extends Component {
   constructor(props) {
-    super();
+    super(props);
     this.state = {
       showModal: false,
       modalType: 'add-work',
@@ -129,6 +129,7 @@ class WorkExperience extends Component {
   }
 
   renderEntry(job, index) {
+    const { isEditingCv } = this.props;
     return (
       <ExperienceEntry
         key={job.key}
@@ -139,11 +140,13 @@ class WorkExperience extends Component {
         dates={`${job.startDate} - ${job.endDate}`}
         onDeleteEntry={this.onDeleteEntry}
         onEditEntry={this.handleEditButtonClick}
+        isEditingCv={isEditingCv}
       />
     );
   }
 
   render() {
+    const { isEditingCv } = this.props;
     const jobs = this.state.jobs.map((job, index) =>
       this.renderEntry(job, index),
     );
@@ -169,17 +172,25 @@ class WorkExperience extends Component {
       );
     }
 
-    return (
-      <section className={styles['work-experience']}>
-        {modal}
-        <div className={sharedStyles['section-header']}>
-          <h2>Work Experience</h2>
+    let editElement;
+    if (isEditingCv) {
+      editElement = (
+        <React.Fragment>
           <button
             className={sharedStyles['add-btn']}
             onClick={this.handleAddButtonClick}
           >
             <FontAwesomeIcon icon={faSquarePlus} size="2x" />
           </button>
+        </React.Fragment>
+      );
+    }
+    return (
+      <section className={styles['work-experience']}>
+        {modal}
+        <div className={sharedStyles['section-header']}>
+          <h2>Work Experience</h2>
+          {editElement}
         </div>
         {jobs}
       </section>
