@@ -41,7 +41,7 @@ class ExperienceEntry extends Component {
     return (
       <article className={styles.container} index={index}>
         <div className={styles['left-container']}>
-          <p>{jobTitle}</p>
+          <p className={sharedStyles['entry-title']}>{jobTitle}</p>
           {editElements}
         </div>
         <div className={styles['right-container']}>

@@ -3,6 +3,7 @@
   grid-template-columns: repeat(2, auto);
   grid-template-rows: repeat(2, auto);
   row-gap: 15px;
+  border-bottom: 2px solid lightskyblue;
 }
 
 .left-container {

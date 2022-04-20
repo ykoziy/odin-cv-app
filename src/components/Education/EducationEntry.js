@@ -40,7 +40,7 @@ class EducationEntry extends Component {
     return (
       <article className={styles.container} index={index}>
         <div className={styles['left-container']}>
-          <p>{title}</p>
+          <p className={sharedStyles['entry-title']}>{title}</p>
           {editElements}
         </div>
         <div className={styles['right-container']}>
