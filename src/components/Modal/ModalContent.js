@@ -54,7 +54,7 @@ class ModalContent extends Component {
             defaultValue={entryData ? setInputDate(entryData.endDate) : ''}
           ></input>
         </div>
-        {button}
+        <div className={styles['modal-btn-container']}>{button}</div>
       </React.Fragment>
     );
   }
@@ -115,7 +115,7 @@ class ModalContent extends Component {
           required
           defaultValue={entryData ? entryData.description : ''}
         ></textarea>
-        {button}
+        <div className={styles['modal-btn-container']}>{button}</div>
       </React.Fragment>
     );
   }

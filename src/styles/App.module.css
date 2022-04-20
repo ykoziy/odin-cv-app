@@ -31,7 +31,7 @@ header {
 }
 
 .buttons button:disabled {
-  background-color: lightgreen;
+  background-color: #4cc760;
 }
 
 .buttons button:first-child {
@@ -39,12 +39,12 @@ header {
 }
 
 .buttons button:nth-child(2) {
-  margin-left: 15px;
+  margin-left: 14px;
 }
 
 .button-divider {
   flex-shrink: 0;
-  background-color: lightgreen;
+  background-color: #4cc760;
   position: absolute;
   border-radius: 50%;
   left: 74px;
