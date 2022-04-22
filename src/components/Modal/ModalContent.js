@@ -129,8 +129,8 @@ class ModalContent extends Component {
         </p>
         <p>
           The personal section can be edited by clicking on the element and
-          changing it, click outside the input field to commit changes. Anything
-          else is edited or added by clicking the icons.
+          changing it. Clicking outside input or pressing the Enter key saves
+          changes. Anything else is edited or added by clicking the icons.
         </p>
       </React.Fragment>
     );
