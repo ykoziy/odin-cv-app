@@ -53,7 +53,11 @@ class Modal extends Component {
           entryData={entryData}
         />
       );
+    } else if (modalType === 'welcome') {
+      heading = <h4>Welcome</h4>;
+      modal = <ModalContent modalType="welcome" />;
     }
+
     return ReactDOM.createPortal(
       <div
         className={`${styles['modal-container']} ${

@@ -2,15 +2,17 @@ import React, { Component } from 'react';
 import Personal from './components/Personal';
 import WorkExperience from './components/WorkExperience/WorkExperience';
 import Education from './components/Education/Education';
+import Modal from './components/Modal/Modal';
 import styles from './styles/App.module.css';
 
 class App extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { isEditingCv: true };
+    this.state = { isEditingCv: true, showModal: true };
     this.onClickEdit = this.onClickEdit.bind(this);
     this.onClickView = this.onClickView.bind(this);
+    this.onCloseModal = this.onCloseModal.bind(this);
   }
 
   onClickEdit() {
@@ -20,10 +22,20 @@ class App extends Component {
   onClickView() {
     this.setState({ isEditingCv: false });
   }
+
+  onCloseModal() {
+    this.setState({ showModal: false });
+  }
+
   render() {
     const isEditingCv = this.state.isEditingCv;
     return (
       <React.Fragment>
+        <Modal
+          modalType="welcome"
+          isOpen={this.state.showModal}
+          closeModalHandler={this.onCloseModal}
+        />
         <header>
           <h1>CV Builder Application</h1>
           <div className={styles.buttons}>

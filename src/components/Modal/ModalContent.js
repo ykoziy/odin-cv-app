@@ -120,6 +120,22 @@ class ModalContent extends Component {
     );
   }
 
+  renderWelcomeModal() {
+    return (
+      <React.Fragment>
+        <p>
+          Welcome to the CV builder application. You can switch between the edit
+          mode and view mode with the buttons on top.
+        </p>
+        <p>
+          The personal section can be edited by clicking on the element and
+          changing it, click outside the input field to commit changes. Anything
+          else is edited or added by clicking the icons.
+        </p>
+      </React.Fragment>
+    );
+  }
+
   render() {
     const { onSubmitEntry, isEditing, entryData, modalType } = this.props;
     let button;
@@ -134,6 +150,8 @@ class ModalContent extends Component {
       modalContent = this.renderEducationModal(entryData, button);
     } else if (modalType === 'work') {
       modalContent = this.renderWorkModal(entryData, button);
+    } else if (modalType === 'welcome') {
+      modalContent = this.renderWelcomeModal();
     }
 
     return <form onSubmit={onSubmitEntry}>{modalContent}</form>;
