@@ -32,6 +32,7 @@ class Personal extends Component {
     this.handleRoleChange = this.handleRoleChange.bind(this);
     this.handleAboutChange = this.handleAboutChange.bind(this);
     this.handleGeneralFieldChange = this.handleGeneralFieldChange.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
     this.editFieldHandler = this.editFieldHandler.bind(this);
     this.handleClickOutside = this.handleClickOutside.bind(this);
   }
@@ -72,6 +73,15 @@ class Personal extends Component {
     }
   }
 
+  handleKeyDown(e) {
+    if (e.key === 'Enter') {
+      this.handleBlankField(this.state.editField);
+      this.setState({
+        editField: null,
+      });
+    }
+  }
+
   renderFullNameField() {
     const { editField, fullName } = this.state;
     if (editField === 'full-name') {
@@ -81,6 +91,7 @@ class Personal extends Component {
           value={fullName}
           onChange={this.handleNameChange}
           onFocus={this.handleInputFocus}
+          onKeyDown={this.handleKeyDown}
           autoFocus
         ></input>
       );
