@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 import styles from '../../styles/Education.module.css';
@@ -8,58 +8,46 @@ import Modal from '../Modal/Modal';
 import uniqid from 'uniqid';
 import { convertInputDates } from '../../util/util.js';
 
-class Education extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      showModal: false,
-      modalType: 'add-education',
-      editIndex: undefined,
-      education: [
-        {
-          key: uniqid(),
-          title: 'education title 1',
-          schoolName: 'school 1',
-          startDate: '01/01/2002',
-          endDate: 'Present',
-        },
-        {
-          key: uniqid(),
-          title: 'education title 2',
-          schoolName: 'school 2',
-          startDate: '01/01/2000',
-          endDate: '12/30/2002',
-        },
-      ],
-    };
-    this.handleAddButtonClick = this.handleAddButtonClick.bind(this);
-    this.handleEditButtonClick = this.handleEditButtonClick.bind(this);
-    this.onCloseModal = this.onCloseModal.bind(this);
-    this.onSubmitEntry = this.onSubmitEntry.bind(this);
-    this.onEditEntry = this.onEditEntry.bind(this);
-    this.onDeleteEntry = this.onDeleteEntry.bind(this);
-  }
+const Education = ({ isEditingCv }) => {
+  const [showModal, setShowModal] = useState(false);
+  const [modalType, setModalType] = useState('add-education');
+  const [editIndex, setEditIndex] = useState(undefined);
+  const [education, setEducation] = useState([
+    {
+      key: uniqid(),
+      title: 'education title 1',
+      schoolName: 'school 1',
+      startDate: '01/01/2002',
+      endDate: 'Present',
+    },
+    {
+      key: uniqid(),
+      title: 'education title 2',
+      schoolName: 'school 2',
+      startDate: '01/01/2000',
+      endDate: '12/30/2002',
+    },
+  ]);
 
-  handleAddButtonClick() {
-    this.setState({ showModal: true, modalType: 'add-education' });
-  }
+  const handleAddButtonClick = () => {
+    setShowModal(true);
+    setModalType('add-education');
+  };
 
-  handleEditButtonClick(e) {
+  const handleEditButtonClick = (e) => {
     const index = Number(
       e.target.parentElement.parentElement.getAttribute('index'),
     );
-    this.setState({
-      showModal: true,
-      modalType: 'edit-education',
-      editIndex: index,
-    });
-  }
+    setShowModal(true);
+    setModalType('edit-education');
+    setEditIndex(index);
+  };
 
-  onCloseModal() {
-    this.setState({ showModal: false });
-  }
+  const onCloseModal = () => {
+    setShowModal(false);
+  };
 
-  onSubmitEntry(e) {
+  const onSubmitEntry = (e) => {
     e.preventDefault();
     let newEntry = {
       key: uniqid(),
@@ -70,14 +58,11 @@ class Education extends Component {
         e.target['end_date'].value,
       ),
     };
+    setShowModal(false);
+    setEducation((education) => [newEntry, ...education]);
+  };
 
-    this.setState({
-      showModal: false,
-      education: [newEntry, ...this.state.education],
-    });
-  }
-
-  onEditEntry(e) {
+  const onEditEntry = (e) => {
     e.preventDefault();
     const editIndex = Number(
       e.target.parentElement.parentElement.getAttribute('index'),
@@ -90,7 +75,7 @@ class Education extends Component {
       ),
     };
 
-    const newList = this.state.education.map((education, index) => {
+    const newList = education.map((education, index) => {
       if (index === editIndex) {
         const updatedEducation = {
           ...education,
@@ -102,21 +87,19 @@ class Education extends Component {
       }
       return education;
     });
-    this.setState({ showModal: false, education: newList });
-  }
+    setShowModal(false);
+    setEducation(newList);
+  };
 
-  onDeleteEntry(e) {
+  const onDeleteEntry = (e) => {
     const deletionIndex = Number(
       e.target.parentElement.parentElement.getAttribute('index'),
     );
-    const newList = this.state.education.filter(
-      (_, idx) => deletionIndex !== idx,
-    );
-    this.setState({ education: newList });
-  }
+    const newList = education.filter((_, idx) => deletionIndex !== idx);
+    setEducation(newList);
+  };
 
-  renderEntry(education, index) {
-    const { isEditingCv } = this.props;
+  const renderEntry = (education, index) => {
     return (
       <EducationEntry
         key={education.key}
@@ -124,65 +107,62 @@ class Education extends Component {
         title={education.title}
         schoolName={education.schoolName}
         dates={`${education.startDate} - ${education.endDate}`}
-        onDeleteEntry={this.onDeleteEntry}
-        onEditEntry={this.handleEditButtonClick}
+        onDeleteEntry={onDeleteEntry}
+        onEditEntry={handleEditButtonClick}
         isEditingCv={isEditingCv}
+      />
+    );
+  };
+
+  const educationList = education.map((education, index) =>
+    renderEntry(education, index),
+  );
+
+  let modal;
+  if (modalType === 'add-education') {
+    modal = (
+      <Modal
+        modalType={modalType}
+        isOpen={showModal}
+        closeModalHandler={onCloseModal}
+        onSubmitEntry={onSubmitEntry}
+      />
+    );
+  } else if (modalType === 'edit-education') {
+    modal = (
+      <Modal
+        modalType={modalType}
+        isOpen={showModal}
+        closeModalHandler={onCloseModal}
+        onSubmitEntry={onEditEntry}
+        entryData={education[editIndex]}
       />
     );
   }
 
-  render() {
-    const { isEditingCv } = this.props;
-    const educationList = this.state.education.map((education, index) =>
-      this.renderEntry(education, index),
-    );
-    let modal;
-    if (this.state.modalType === 'add-education') {
-      modal = (
-        <Modal
-          modalType={this.state.modalType}
-          isOpen={this.state.showModal}
-          closeModalHandler={this.onCloseModal}
-          onSubmitEntry={this.onSubmitEntry}
-        />
-      );
-    } else if (this.state.modalType === 'edit-education') {
-      modal = (
-        <Modal
-          modalType={this.state.modalType}
-          isOpen={this.state.showModal}
-          closeModalHandler={this.onCloseModal}
-          onSubmitEntry={this.onEditEntry}
-          entryData={this.state.education[this.state.editIndex]}
-        />
-      );
-    }
-
-    let editElement;
+  const renderAddButton = () => {
     if (isEditingCv) {
-      editElement = (
-        <React.Fragment>
-          <button
-            className={sharedStyles['add-btn']}
-            onClick={this.handleAddButtonClick}
-          >
-            <FontAwesomeIcon icon={faSquarePlus} size="2x" />
-          </button>
-        </React.Fragment>
+      return (
+        <button
+          className={sharedStyles['add-btn']}
+          onClick={handleAddButtonClick}
+        >
+          <FontAwesomeIcon icon={faSquarePlus} size="2x" />
+        </button>
       );
     }
+  };
 
-    return (
-      <section className={styles.education}>
-        {modal}
-        <div className={sharedStyles['section-header']}>
-          <h2>Education</h2>
-          {editElement}
-        </div>
-        {educationList}
-      </section>
-    );
-  }
-}
+  return (
+    <section className={styles.education}>
+      {modal}
+      <div className={sharedStyles['section-header']}>
+        <h2>Education</h2>
+        {renderAddButton()}
+      </div>
+      {educationList}
+    </section>
+  );
+};
 
 export default Education;
