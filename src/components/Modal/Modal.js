@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareXmark } from '@fortawesome/free-solid-svg-icons';
@@ -6,27 +6,16 @@ import sharedStyles from '../../styles/SharedStyles.module.css';
 import styles from '../../styles/Modal.module.css';
 import ModalContent from './ModalContent';
 
-class Modal extends Component {
-  constructor(props) {
-    super();
-  }
-
-  render() {
-    const { modalType, isOpen, closeModalHandler, onSubmitEntry, entryData } =
-      this.props;
-    let modal, heading;
-    if (modalType === 'add-work') {
-      heading = <h4>Adding work experience</h4>;
-      modal = (
-        <ModalContent
-          onSubmitEntry={onSubmitEntry}
-          isEditing={false}
-          modalType="work"
-        />
-      );
-    } else if (modalType === 'edit-work') {
-      heading = <h4>Editing work experience</h4>;
-      modal = (
+const Modal = ({
+  modalType,
+  isOpen,
+  closeModalHandler,
+  onSubmitEntry,
+  entryData,
+}) => {
+  const renderEditModal = () => {
+    if (modalType.endsWith('-work')) {
+      return (
         <ModalContent
           onSubmitEntry={onSubmitEntry}
           isEditing={true}
@@ -34,18 +23,8 @@ class Modal extends Component {
           entryData={entryData}
         />
       );
-    } else if (modalType === 'add-education') {
-      heading = <h4>Adding education</h4>;
-      modal = (
-        <ModalContent
-          onSubmitEntry={onSubmitEntry}
-          isEditing={false}
-          modalType="education"
-        />
-      );
-    } else if (modalType === 'edit-education') {
-      heading = <h4>Editing education</h4>;
-      modal = (
+    } else if (modalType.endsWith('-education')) {
+      return (
         <ModalContent
           onSubmitEntry={onSubmitEntry}
           isEditing={true}
@@ -53,33 +32,77 @@ class Modal extends Component {
           entryData={entryData}
         />
       );
-    } else if (modalType === 'welcome') {
-      heading = <h4>Welcome</h4>;
-      modal = <ModalContent modalType="welcome" />;
     }
+  };
 
-    return ReactDOM.createPortal(
-      <div
-        className={`${styles['modal-container']} ${
-          isOpen ? undefined : 'hidden'
-        }`}
-      >
-        <div className={styles.modal}>
-          <div className={styles['modal-toolbar']}>
-            {heading}
-            <button
-              className={sharedStyles['close-btn']}
-              onClick={closeModalHandler}
-            >
-              <FontAwesomeIcon icon={faSquareXmark} size="2x" />
-            </button>
-          </div>
-          <div className={styles['modal-content']}>{modal}</div>
+  const renderAddModal = () => {
+    if (modalType.endsWith('-work')) {
+      return (
+        <ModalContent
+          onSubmitEntry={onSubmitEntry}
+          isEditing={false}
+          modalType="work"
+        />
+      );
+    } else if (modalType.endsWith('-education')) {
+      return (
+        <ModalContent
+          onSubmitEntry={onSubmitEntry}
+          isEditing={false}
+          modalType="education"
+        />
+      );
+    }
+  };
+
+  const renderHeading = () => {
+    let heading = '';
+    if (modalType.startsWith('add-')) {
+      heading += 'Adding ';
+    } else if (modalType.startsWith('edit-')) {
+      heading += 'Editing ';
+    } else if (modalType === 'welcome') {
+      heading += 'Welcome';
+    }
+    if (modalType.endsWith('-work')) {
+      heading += ' work experience';
+    } else if (modalType.endsWith('-education')) {
+      heading += ' education';
+    }
+    return <h4>{heading}</h4>;
+  };
+
+  const renderModal = () => {
+    if (modalType.startsWith('add-')) {
+      return renderAddModal();
+    } else if (modalType.startsWith('edit-')) {
+      return renderEditModal();
+    } else if (modalType === 'welcome') {
+      return <ModalContent modalType="welcome" />;
+    }
+  };
+
+  return ReactDOM.createPortal(
+    <div
+      className={`${styles['modal-container']} ${
+        isOpen ? undefined : 'hidden'
+      }`}
+    >
+      <div className={styles.modal}>
+        <div className={styles['modal-toolbar']}>
+          {renderHeading()}
+          <button
+            className={sharedStyles['close-btn']}
+            onClick={closeModalHandler}
+          >
+            <FontAwesomeIcon icon={faSquareXmark} size="2x" />
+          </button>
         </div>
-      </div>,
-      document.body,
-    );
-  }
-}
+        <div className={styles['modal-content']}>{renderModal()}</div>
+      </div>
+    </div>,
+    document.body,
+  );
+};
 
 export default Modal;
