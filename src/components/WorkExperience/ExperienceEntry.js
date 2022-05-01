@@ -1,29 +1,22 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareMinus, faSquarePen } from '@fortawesome/free-solid-svg-icons';
 import sharedStyles from '../../styles/SharedStyles.module.css';
 import styles from '../../styles/ExperienceEntry.module.css';
 
-class ExperienceEntry extends Component {
-  constructor(props) {
-    super();
-  }
-
-  render() {
-    const {
-      jobTitle,
-      companyName,
-      description,
-      dates,
-      index,
-      onDeleteEntry,
-      onEditEntry,
-      isEditingCv,
-    } = this.props;
-
-    let editElements;
+const ExperienceEntry = ({
+  jobTitle,
+  companyName,
+  description,
+  dates,
+  index,
+  onDeleteEntry,
+  onEditEntry,
+  isEditingCv,
+}) => {
+  const renderEditButtons = () => {
     if (isEditingCv) {
-      editElements = (
+      return (
         <React.Fragment>
           <button
             className={sharedStyles['delete-btn']}
@@ -37,23 +30,23 @@ class ExperienceEntry extends Component {
         </React.Fragment>
       );
     }
+  };
 
-    return (
-      <article className={styles.container} index={index}>
-        <div className={styles['left-container']}>
-          <p className={sharedStyles['entry-title']}>{jobTitle}</p>
-          {editElements}
-        </div>
-        <div className={styles['right-container']}>
-          <p>{companyName}</p>
-          <p>{dates}</p>
-        </div>
-        <div className={styles['bottom-container']}>
-          <p>{description}</p>
-        </div>
-      </article>
-    );
-  }
-}
+  return (
+    <article className={styles.container} index={index}>
+      <div className={styles['left-container']}>
+        <p className={sharedStyles['entry-title']}>{jobTitle}</p>
+        {renderEditButtons()}
+      </div>
+      <div className={styles['right-container']}>
+        <p>{companyName}</p>
+        <p>{dates}</p>
+      </div>
+      <div className={styles['bottom-container']}>
+        <p>{description}</p>
+      </div>
+    </article>
+  );
+};
 
 export default ExperienceEntry;
