@@ -137,8 +137,6 @@ const WorkExperience = ({ isEditingCv }) => {
     );
   };
 
-  const jobsList = jobs.map((job, index) => renderEntry(job, index));
-
   const getModal = () => {
     let modal;
     if (modalType === 'add-work') {
@@ -184,7 +182,7 @@ const WorkExperience = ({ isEditingCv }) => {
         <h2>Work Experience</h2>
         {renderAddButton()}
       </div>
-      {jobsList}
+      {jobs.map((job, index) => renderEntry(job, index))}
     </section>
   );
 };
