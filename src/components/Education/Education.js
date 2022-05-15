@@ -114,31 +114,30 @@ const Education = ({ isEditingCv }) => {
     );
   };
 
-  const educationList = education.map((education, index) =>
-    renderEntry(education, index),
-  );
-
-  let modal;
-  if (modalType === 'add-education') {
-    modal = (
-      <Modal
-        modalType={modalType}
-        isOpen={showModal}
-        closeModalHandler={onCloseModal}
-        onSubmitEntry={onSubmitEntry}
-      />
-    );
-  } else if (modalType === 'edit-education') {
-    modal = (
-      <Modal
-        modalType={modalType}
-        isOpen={showModal}
-        closeModalHandler={onCloseModal}
-        onSubmitEntry={onEditEntry}
-        entryData={education[editIndex]}
-      />
-    );
-  }
+  const getModal = () => {
+    let modal;
+    if (modalType === 'add-education') {
+      modal = (
+        <Modal
+          modalType={modalType}
+          isOpen={showModal}
+          closeModalHandler={onCloseModal}
+          onSubmitEntry={onSubmitEntry}
+        />
+      );
+    } else if (modalType === 'edit-education') {
+      modal = (
+        <Modal
+          modalType={modalType}
+          isOpen={showModal}
+          closeModalHandler={onCloseModal}
+          onSubmitEntry={onEditEntry}
+          entryData={education[editIndex]}
+        />
+      );
+    }
+    return modal;
+  };
 
   const renderAddButton = () => {
     if (isEditingCv) {
@@ -155,12 +154,12 @@ const Education = ({ isEditingCv }) => {
 
   return (
     <section className={styles.education}>
-      {modal}
+      {getModal()}
       <div className={sharedStyles['section-header']}>
         <h2>Education</h2>
         {renderAddButton()}
       </div>
-      {educationList}
+      {education.map((education, index) => renderEntry(education, index))}
     </section>
   );
 };
