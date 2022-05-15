@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 import styles from '../../styles/WorkExperience.module.css';
@@ -8,75 +8,64 @@ import Modal from '../Modal/Modal';
 import uniqid from 'uniqid';
 import { convertInputDates } from '../../util/util.js';
 
-class WorkExperience extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      showModal: false,
-      modalType: 'add-work',
-      editIndex: undefined,
-      jobs: [
-        {
-          key: uniqid(),
-          title: 'Job Title 1',
-          company: 'Company Name 1',
-          description: `
-          Porttitor massa id neque aliquam. Ac felis donec et odio
-          pellentesque diam volutpat. Blandit massa enim nec dui nunc mattis
-          enim ut tellus. Nisl suscipit adipiscing bibendum est ultricies. Sed
-          nisi lacus sed viverra tellus in hac.Enim tortor at auctor urna nunc
-          id cursus. In vitae turpis massa sed elementum tempus egestas. Vitae
-          tempus quam pellentesque nec nam aliquam.
-          `,
-          startDate: '01/01/2002',
-          endDate: 'Present',
-        },
-        {
-          key: uniqid(),
-          title: 'Job Title 2',
-          company: 'Company Name 2',
-          description: `
-          Porttitor massa id neque aliquam. Ac felis donec et odio
-          pellentesque diam volutpat. Blandit massa enim nec dui nunc mattis
-          enim ut tellus. Nisl suscipit adipiscing bibendum est ultricies. Sed
-          nisi lacus sed viverra tellus in hac.Enim tortor at auctor urna nunc
-          id cursus. In vitae turpis massa sed elementum tempus egestas. Vitae
-          tempus quam pellentesque nec nam aliquam.
-          `,
-          startDate: '01/01/2000',
-          endDate: '12/30/2002',
-        },
-      ],
-    };
-    this.handleAddButtonClick = this.handleAddButtonClick.bind(this);
-    this.handleEditButtonClick = this.handleEditButtonClick.bind(this);
-    this.onCloseModal = this.onCloseModal.bind(this);
-    this.onSubmitEntry = this.onSubmitEntry.bind(this);
-    this.onEditEntry = this.onEditEntry.bind(this);
-    this.onDeleteEntry = this.onDeleteEntry.bind(this);
-  }
+const WorkExperience = ({ isEditingCv }) => {
+  const jobsArray = [
+    {
+      key: uniqid(),
+      title: 'Job Title 1',
+      company: 'Company Name 1',
+      description: `
+      Porttitor massa id neque aliquam. Ac felis donec et odio
+      pellentesque diam volutpat. Blandit massa enim nec dui nunc mattis
+      enim ut tellus. Nisl suscipit adipiscing bibendum est ultricies. Sed
+      nisi lacus sed viverra tellus in hac.Enim tortor at auctor urna nunc
+      id cursus. In vitae turpis massa sed elementum tempus egestas. Vitae
+      tempus quam pellentesque nec nam aliquam.
+      `,
+      startDate: '01/01/2002',
+      endDate: 'Present',
+    },
+    {
+      key: uniqid(),
+      title: 'Job Title 2',
+      company: 'Company Name 2',
+      description: `
+      Porttitor massa id neque aliquam. Ac felis donec et odio
+      pellentesque diam volutpat. Blandit massa enim nec dui nunc mattis
+      enim ut tellus. Nisl suscipit adipiscing bibendum est ultricies. Sed
+      nisi lacus sed viverra tellus in hac.Enim tortor at auctor urna nunc
+      id cursus. In vitae turpis massa sed elementum tempus egestas. Vitae
+      tempus quam pellentesque nec nam aliquam.
+      `,
+      startDate: '01/01/2000',
+      endDate: '12/30/2002',
+    },
+  ];
 
-  handleAddButtonClick() {
-    this.setState({ showModal: true, modalType: 'add-work' });
-  }
+  const [showModal, setShowModal] = useState(false);
+  const [modalType, setModalType] = useState('add-work');
+  const [editIndex, setEditIndex] = useState(undefined);
+  const [jobs, setJobs] = useState(jobsArray);
 
-  handleEditButtonClick(e) {
+  const handleAddButtonClick = () => {
+    setShowModal(true);
+    setModalType('add-work');
+  };
+
+  const handleEditButtonClick = (e) => {
     const index = Number(
       e.target.parentElement.parentElement.getAttribute('index'),
     );
-    this.setState({
-      showModal: true,
-      modalType: 'edit-work',
-      editIndex: index,
-    });
-  }
+    setShowModal(true);
+    setModalType('edit-work');
+    setEditIndex(index);
+  };
 
-  onCloseModal() {
-    this.setState({ showModal: false });
-  }
+  const onCloseModal = () => {
+    setShowModal(false);
+  };
 
-  onSubmitEntry(e) {
-    console.log('adding');
+  const onSubmitEntry = (e) => {
     e.preventDefault();
     let newEntry = {
       key: uniqid(),
@@ -88,10 +77,12 @@ class WorkExperience extends Component {
         e.target['end_date'].value,
       ),
     };
-    this.setState({ showModal: false, jobs: [newEntry, ...this.state.jobs] });
-  }
+    setShowModal(false);
+    setJobs([newEntry, ...jobs]);
+    //this.setState({ showModal: false, jobs: [newEntry, ...this.state.jobs] });
+  };
 
-  onEditEntry(e) {
+  const onEditEntry = (e) => {
     e.preventDefault();
     const editIndex = Number(
       e.target.parentElement.parentElement.getAttribute('index'),
@@ -104,7 +95,7 @@ class WorkExperience extends Component {
       ),
     };
 
-    const newJobs = this.state.jobs.map((job, index) => {
+    const newJobs = jobs.map((job, index) => {
       if (index === editIndex) {
         const updatedJob = {
           ...job,
@@ -117,19 +108,20 @@ class WorkExperience extends Component {
       }
       return job;
     });
-    this.setState({ showModal: false, jobs: newJobs });
-  }
+    setShowModal(false);
+    setJobs(newJobs);
+    //this.setState({ showModal: false, jobs: newJobs });
+  };
 
-  onDeleteEntry(e) {
+  const onDeleteEntry = (e) => {
     const deletionIndex = Number(
       e.target.parentElement.parentElement.getAttribute('index'),
     );
-    const newJobs = this.state.jobs.filter((_, idx) => deletionIndex !== idx);
-    this.setState({ jobs: newJobs });
-  }
+    const newJobs = jobs.filter((_, idx) => deletionIndex !== idx);
+    setJobs(newJobs);
+  };
 
-  renderEntry(job, index) {
-    const { isEditingCv } = this.props;
+  const renderEntry = (job, index) => {
     return (
       <ExperienceEntry
         key={job.key}
@@ -138,64 +130,63 @@ class WorkExperience extends Component {
         companyName={job.company}
         description={job.description}
         dates={`${job.startDate} - ${job.endDate}`}
-        onDeleteEntry={this.onDeleteEntry}
-        onEditEntry={this.handleEditButtonClick}
+        onDeleteEntry={onDeleteEntry}
+        onEditEntry={handleEditButtonClick}
         isEditingCv={isEditingCv}
       />
     );
-  }
+  };
 
-  render() {
-    const { isEditingCv } = this.props;
-    const jobs = this.state.jobs.map((job, index) =>
-      this.renderEntry(job, index),
-    );
+  const jobsList = jobs.map((job, index) => renderEntry(job, index));
+
+  const getModal = () => {
     let modal;
-    if (this.state.modalType === 'add-work') {
+    if (modalType === 'add-work') {
       modal = (
         <Modal
-          modalType={this.state.modalType}
-          isOpen={this.state.showModal}
-          closeModalHandler={this.onCloseModal}
-          onSubmitEntry={this.onSubmitEntry}
+          modalType={modalType}
+          isOpen={showModal}
+          closeModalHandler={onCloseModal}
+          onSubmitEntry={onSubmitEntry}
         />
       );
-    } else if (this.state.modalType === 'edit-work') {
+    } else if (modalType === 'edit-work') {
       modal = (
         <Modal
-          modalType={this.state.modalType}
-          isOpen={this.state.showModal}
-          closeModalHandler={this.onCloseModal}
-          onSubmitEntry={this.onEditEntry}
-          entryData={this.state.jobs[this.state.editIndex]}
+          modalType={modalType}
+          isOpen={showModal}
+          closeModalHandler={onCloseModal}
+          onSubmitEntry={onEditEntry}
+          entryData={jobs[editIndex]}
         />
       );
     }
+    return modal;
+  };
 
-    let editElement;
+  const renderAddButton = () => {
     if (isEditingCv) {
-      editElement = (
-        <React.Fragment>
-          <button
-            className={sharedStyles['add-btn']}
-            onClick={this.handleAddButtonClick}
-          >
-            <FontAwesomeIcon icon={faSquarePlus} size="2x" />
-          </button>
-        </React.Fragment>
+      return (
+        <button
+          className={sharedStyles['add-btn']}
+          onClick={handleAddButtonClick}
+        >
+          <FontAwesomeIcon icon={faSquarePlus} size="2x" />
+        </button>
       );
     }
-    return (
-      <section className={styles['work-experience']}>
-        {modal}
-        <div className={sharedStyles['section-header']}>
-          <h2>Work Experience</h2>
-          {editElement}
-        </div>
-        {jobs}
-      </section>
-    );
-  }
-}
+  };
+
+  return (
+    <section className={styles['work-experience']}>
+      {getModal()}
+      <div className={sharedStyles['section-header']}>
+        <h2>Work Experience</h2>
+        {renderAddButton()}
+      </div>
+      {jobsList}
+    </section>
+  );
+};
 
 export default WorkExperience;
